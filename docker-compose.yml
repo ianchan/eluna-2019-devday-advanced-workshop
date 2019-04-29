@@ -30,3 +30,17 @@ services:
     volumes:
     - ./primo-explore/custom:/app/primo-explore/custom/
     - ./packages:/app/packages/
+
+  e2e:
+    image: primo-explore-eluna-cypress
+    build:
+      context: ./e2e-cypress
+      cache_from:
+      - primo-explore-eluna-cypress
+      - quay.io/nyulibraries/eluna-2019-devday-advanced-workshop:e2e
+    depends_on:
+    - web
+    environment:
+      DOMAIN: http://web:8003/primo-explore/search
+      VIEW: ${VIEW-NYU}
+      CYPRESS_BASE_URL: http://web:8003/primo-explore/
